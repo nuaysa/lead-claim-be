@@ -1,0 +1,26 @@
+import { Request, Response } from "express";
+import { verify } from "jsonwebtoken";
+import prisma from "../../prisma";
+
+export const verifyService = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.params;
+    if (typeof token !== "string") {
+      return res.status(400).send({ message: "Invalid token format" });
+    }
+    const verifiedCustomer = verify(token, process.env.JWT_KEY || "") as unknown as {
+      id: number;
+    };
+    await prisma.user.update({
+      data: { isVerified: true },
+      where: { id: verifiedCustomer.id },
+    });
+    res.status(200).send({ message: "Pengguna Berhasil Diverifikasi" });
+  } catch (err: any) {
+    console.error("Error verifying customer:", err);
+    res.status(400).send({
+      message: "Token Invalid atau Gagal Verifikasi",
+      error: err.message,
+    });
+  }
+};

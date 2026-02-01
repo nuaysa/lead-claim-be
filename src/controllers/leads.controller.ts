@@ -1,0 +1,55 @@
+// lead.controller.ts
+import { getSalesStatsByDateService } from "../services/leads/getAllSales.service";
+import { claimLeadService } from "../services/leads/claimLead.service";
+import { getUnclaimedLeadsService } from "../services/leads/getAllLeads.service";
+import { getMyLeadsService } from "../services/leads/getLeadsByUserId.service";
+import { Request, Response } from "express";
+
+export class LeadsController {
+  async getUnclaimedLeads(req: Request, res: Response) {
+    const data = await getUnclaimedLeadsService();
+    res.json(data);
+  }
+
+async getAllSalesClaims(req: Request, res: Response) {
+  const { start, end } = req.query;
+
+  const startDate = start
+    ? new Date(start as string)
+    : undefined;
+
+  const endDate = end
+    ? new Date(end as string)
+    : undefined;
+
+  const data = await getSalesStatsByDateService(
+    startDate,
+    endDate
+  );
+
+  res.json({
+    success: true,
+    data,
+  });
+}
+
+
+  async claimLead(req: Request, res: Response) {
+    const leadId = Number(req.params.id);
+    const salesId = req.user?.id || 0; 
+    
+    try {
+      const data = await claimLeadService(leadId, salesId);
+      res.json(data);
+    } catch (err: any) {
+      res.status(err.status || 500).json({ message: err.message });
+    }
+  }
+
+  async getMyLeads(req: Request, res: Response) {
+    const salesId = req.user?.id || 0;
+
+    const data = await getMyLeadsService(salesId);
+    res.json(data);
+  }
+}
