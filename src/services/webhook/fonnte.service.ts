@@ -1,11 +1,10 @@
+import { AppError } from "@/utils/response";
 import prisma from "../../prisma";
-import { AppError } from "../../utils/response";
-
 interface FonntePayload {
   sender: string;
   name?: string;
   message: string;
-  timestamp: Date;
+  timestamp: number | string;
 }
 
 export const handleFonnteWebhookService = async (
@@ -14,11 +13,15 @@ export const handleFonnteWebhookService = async (
   try {
     const phone = payload.sender.replace(/\D/g, "");
 
+    if (!phone || phone.length < 9) {
+      return {
+        isNew: false,
+        reason: "Invalid sender",
+      };
+    }
+
     const existingLead = await prisma.lead.findFirst({
-      where: {
-        phone,
-        status: "UNCLAIMED",
-      },
+      where: { phone },
     });
 
     if (existingLead) {
@@ -28,13 +31,17 @@ export const handleFonnteWebhookService = async (
       };
     }
 
+    const requestDate = new Date(
+      Number(payload.timestamp) * 1000
+    );
+
     const lead = await prisma.lead.create({
       data: {
         name: payload.name || "Unknown",
         phone,
         source: "fonnte",
         status: "UNCLAIMED",
-        requestDate: payload.timestamp,
+        requestDate,
       },
     });
 
@@ -43,7 +50,10 @@ export const handleFonnteWebhookService = async (
       leadId: lead.id,
     };
   } catch (error) {
-    console.error("Fonnte webhook service error:", error);
-    throw new AppError("Failed to process Fonnte webhook", 500);
+    console.error("Fonnte webhook error:", error);
+    throw new AppError(
+      "Failed to process Fonnte webhook",
+      500
+    );
   }
 };
