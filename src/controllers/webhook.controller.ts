@@ -11,7 +11,9 @@ export class WebhookController {
       if (token !== process.env.FONNTE_TOKEN) {
         throw new AppError("Invalid Fonnte token", 401);
       }
-
+      console.log("Received Fonnte webhook:", JSON.stringify(req.body, null, 2));
+      console.log("Authorization Token:", token);
+      
       const { sender, name, message, timestamp } = req.body;
 
       if (!sender || !message || !timestamp) {
