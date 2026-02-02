@@ -11,7 +11,7 @@ export class WebhookRouter {
   }
 
   private initializeRoutes() {
-    this.router.post("/fonnte", this.webhookController.handleFonnteWebhookController);
+    this.router.post("/", this.webhookController.handleFonnteWebhookController);
   }
 
   getRouter() {
