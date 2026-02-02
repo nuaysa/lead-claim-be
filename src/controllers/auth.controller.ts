@@ -39,6 +39,7 @@ export class AuthController {
           message: "No token provided",
         });
       }
+      
     const token = authHeader.startsWith('Bearer ') 
       ? authHeader.slice(7) 
       : authHeader;

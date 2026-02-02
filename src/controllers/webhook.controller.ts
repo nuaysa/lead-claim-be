@@ -6,13 +6,13 @@ import "dotenv/config";
 export class WebhookController {
 handleFonnteWebhookController = async (req: Request, res: Response) => {
   try {
-    const token = req.headers["x-fonnte-token"] as string;
+    // const token = req.headers["x-fonnte-token"] as string;
 
-    if (!token || token !== process.env.FONNTE_WEBHOOK_TOKEN) {
-      throw new AppError("Invalid Fonnte webhook token", 401);
-    }
+    // if (!token || token !== process.env.FONNTE_WEBHOOK_TOKEN) {
+    //   throw new AppError("Invalid Fonnte webhook token", 401);
+    // }
 
-    console.log("Received Fonnte webhook:", JSON.stringify(req.body, null, 2));
+    // console.log("Received Fonnte webhook:", JSON.stringify(req.body, null, 2));
 
     const { status, detail, sender, name, message, timestamp } = req.body;
 
