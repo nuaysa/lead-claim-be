@@ -6,17 +6,17 @@ import { getMyLeadsService } from "../services/leads/getLeadsByUserId.service";
 import { Request, Response } from "express";
 
 export class LeadsController {
-async getUnclaimedLeads(req: Request, res: Response) {
-  const limit = Number(req.query.limit) || 20;
-  const cursor = req.query.cursor as string | undefined;
+  async getUnclaimedLeads(req: Request, res: Response) {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
 
-  const data = await getUnclaimedLeadsService(limit, cursor);
+    const data = await getUnclaimedLeadsService(page, limit);
 
-  res.json({
-    success: true,
-    ...data,
-  });
-}
+    res.json({
+      success: true,
+      ...data,
+    });
+  }
 
   async getAllSalesClaims(req: Request, res: Response) {
     const { start, end } = req.query;
@@ -47,7 +47,14 @@ async getUnclaimedLeads(req: Request, res: Response) {
   async getMyLeads(req: Request, res: Response) {
     const salesId = req.user?.id || 0;
 
-    const data = await getMyLeadsService(salesId);
-    res.json(data);
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+
+    const data = await getMyLeadsService(salesId, page, limit);
+
+    res.json({
+      success: true,
+      ...data,
+    });
   }
 }

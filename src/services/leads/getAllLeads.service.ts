@@ -1,10 +1,19 @@
 import prisma from "../../prisma";
 import { AppError } from "../../utils/response";
+
 export const getUnclaimedLeadsService = async (
-  limit = 20,
-  cursor?: string
+  page = 1,
+  limit = 10
 ) => {
   try {
+    const skip = (page - 1) * limit;
+
+    const total = await prisma.lead.count({
+      where: {
+        status: "UNCLAIMED",
+      },
+    });
+
     const leads = await prisma.lead.findMany({
       where: {
         status: "UNCLAIMED",
@@ -12,20 +21,19 @@ export const getUnclaimedLeadsService = async (
       orderBy: {
         requestDate: "desc",
       },
-      take: limit + 1, // detect next page
-      ...(cursor && {
-        cursor: { id: parseInt(cursor, 10) },
-        skip: 1,
-      }),
+      skip,
+      take: limit,
     });
 
-    const hasNextPage = leads.length > limit;
-    const data = hasNextPage ? leads.slice(0, limit) : leads;
+    const totalPages = Math.ceil(total / limit);
 
     return {
       message: "Unclaimed leads fetched successfully",
-      data,
-      nextCursor: hasNextPage ? data[data.length - 1].id : null,
+      data: leads,
+      page,
+      limit,
+      total,
+      totalPages,
     };
   } catch (error) {
     console.error("Get unclaimed leads error:", error);
