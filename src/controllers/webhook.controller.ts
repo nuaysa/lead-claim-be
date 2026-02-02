@@ -13,14 +13,16 @@ export class WebhookController {
       }
       console.log("Received Fonnte webhook:", JSON.stringify(req.body, null, 2));
       console.log("Authorization Token:", token);
-      
-      const { sender, name, message, timestamp } = req.body;
+
+      const { status, detail, sender, name, message, timestamp } = req.body;
 
       if (!sender || !message || !timestamp) {
         throw new AppError("Invalid payload from Fonnte", 400);
       }
 
       const result = await handleFonnteWebhookService({
+        status,
+        detail,
         sender,
         name,
         message,

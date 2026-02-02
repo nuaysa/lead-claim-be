@@ -1,6 +1,8 @@
 import { AppError } from "../../utils/response";
 import prisma from "../../prisma";
 interface FonntePayload {
+  status: boolean
+  detail: string
   sender: string;
   name?: string;
   message: string;
