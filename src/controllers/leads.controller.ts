@@ -6,38 +6,36 @@ import { getMyLeadsService } from "../services/leads/getLeadsByUserId.service";
 import { Request, Response } from "express";
 
 export class LeadsController {
-  async getUnclaimedLeads(req: Request, res: Response) {
-    const data = await getUnclaimedLeadsService();
-    res.json(data);
-  }
+async getUnclaimedLeads(req: Request, res: Response) {
+  const limit = Number(req.query.limit) || 20;
+  const cursor = req.query.cursor as string | undefined;
 
-async getAllSalesClaims(req: Request, res: Response) {
-  const { start, end } = req.query;
-
-  const startDate = start
-    ? new Date(start as string)
-    : undefined;
-
-  const endDate = end
-    ? new Date(end as string)
-    : undefined;
-
-  const data = await getSalesStatsByDateService(
-    startDate,
-    endDate
-  );
+  const data = await getUnclaimedLeadsService(limit, cursor);
 
   res.json({
     success: true,
-    data,
+    ...data,
   });
 }
 
+  async getAllSalesClaims(req: Request, res: Response) {
+    const { start, end } = req.query;
+    const startDate = start ? new Date(`${start}T00:00:00.000`) : undefined;
+
+    const endDate = end ? new Date(`${end}T23:59:59.999`) : undefined;
+
+    const data = await getSalesStatsByDateService(startDate, endDate);
+
+    res.json({
+      success: true,
+      data,
+    });
+  }
 
   async claimLead(req: Request, res: Response) {
     const leadId = Number(req.params.id);
-    const salesId = req.user?.id || 0; 
-    
+    const salesId = req.user?.id || 0;
+
     try {
       const data = await claimLeadService(leadId, salesId);
       res.json(data);

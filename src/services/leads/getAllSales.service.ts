@@ -13,6 +13,17 @@ export const getSalesStatsByDateService = async (
       endDate = new Date(today.setHours(23, 59, 59, 999));
     }
 
+    // 1️⃣ total leads (semua, claimed + unclaimed)
+    const totalLeads = await prisma.lead.count({
+      where: {
+        requestDate: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+    });
+
+    // 2️⃣ claimed per sales
     const grouped = await prisma.lead.groupBy({
       by: ["claimedById"],
       where: {
@@ -29,25 +40,32 @@ export const getSalesStatsByDateService = async (
       },
     });
 
+    // 3️⃣ semua sales
     const sales = await prisma.user.findMany({
-      where: {
-        role: "SALES",
-      },
       select: {
         id: true,
         name: true,
       },
     });
 
+    // 4️⃣ mapping + percentage
     return sales.map((sales) => {
       const found = grouped.find(
         (g) => g.claimedById === sales.id
       );
 
+      const totalClaimed = found?._count._all ?? 0;
+      const percentage =
+        totalLeads === 0
+          ? 0
+          : Math.round((totalClaimed / totalLeads) * 100);
+
       return {
         id: sales.id,
         name: sales.name,
-        totalClaimed: found?._count._all || 0,
+        totalLeads,
+        totalClaimed,
+        percentage,
       };
     });
   } catch (error) {
