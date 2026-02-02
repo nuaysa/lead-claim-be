@@ -14,7 +14,7 @@ export const handleFonnteWebhookService = async (
 ) => {
   try {
      console.log("RAW PAYLOAD:", JSON.stringify(payload, null, 2));
-    const phone = payload.sender.replace(/\D/g, "");
+    const phone = payload.sender.split('@')[0].replace(/^0/, '62');
 
     if (!phone || phone.length < 9) {
       return {
