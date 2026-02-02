@@ -1,4 +1,4 @@
-import { AppError } from "@/utils/response";
+import { AppError } from "../../utils/response";
 import prisma from "../../prisma";
 interface FonntePayload {
   sender: string;
