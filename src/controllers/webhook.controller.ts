@@ -1,16 +1,12 @@
 import { handleFonnteWebhookService } from "../services/webhook/fonnte.service";
 import { AppError } from "../utils/response";
 import { Request, Response } from "express";
+import "dotenv/config";
+
 export class WebhookController {
-  handleFonnteWebhookController = async (
-    req: Request,
-    res: Response
-  ) => {
+  handleFonnteWebhookController = async (req: Request, res: Response) => {
     try {
-      const token =
-        typeof req.headers["x-fonnte-token"] === "string"
-          ? req.headers["x-fonnte-token"]
-          : "";
+      const token = req.headers["authorization"]?.toString().replace("Bearer ", "") || "";
 
       if (token !== process.env.FONNTE_TOKEN) {
         throw new AppError("Invalid Fonnte token", 401);
@@ -19,10 +15,7 @@ export class WebhookController {
       const { sender, name, message, timestamp } = req.body;
 
       if (!sender || !message || !timestamp) {
-        throw new AppError(
-          "Invalid payload from Fonnte",
-          400
-        );
+        throw new AppError("Invalid payload from Fonnte", 400);
       }
 
       const result = await handleFonnteWebhookService({
