@@ -26,8 +26,4 @@ app.use("/api/auth", authRouter.getRouter());
 app.use("/api/webhook", webhookRouter.getRouter());
 app.use("/api/leads", leadRouter.getRouter());
 
-app.listen(PORT, () => {
-    console.log(`server running on -> http://localhost:${PORT}/api`)
-})
-
 export default app;
