@@ -6,7 +6,6 @@ import "dotenv/config";
 export class WebhookController {
 handleFonnteWebhookController = async (req: Request, res: Response) => {
    try {
-    console.log("Fonnte Webhook Received:", JSON.stringify(req.body, null, 2));
   
     const { status, detail, sender, name, message, timestamp } = req.body;
 
