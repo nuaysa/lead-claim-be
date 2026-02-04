@@ -1,4 +1,4 @@
-// lead.controller.ts
+
 import { getSalesStatsByDateService } from "../services/leads/getAllSales.service";
 import { claimLeadService } from "../services/leads/claimLead.service";
 import { getUnclaimedLeadsService } from "../services/leads/getAllLeads.service";
