@@ -8,7 +8,7 @@ handleFonnteWebhookController = async (req: Request, res: Response) => {
    try {
     const token = req.headers["x-fonnte-token"] as string;
     console.log("Fonnte Webhook Received:", JSON.stringify(req.body, null, 2));
-    console.log("Fonnte Webhook Token:", token);
+    console.log("Fonnte Webhook Token:", req.headers);
   
     if (!token || token !== process.env.FONNTE_WEBHOOK_TOKEN) {
       throw new AppError("Invalid Fonnte webhook token", 401);
