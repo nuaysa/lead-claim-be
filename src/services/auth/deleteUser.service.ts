@@ -6,7 +6,7 @@ export const deleteUserService = async (req: Request, res: Response, next: NextF
      const { userId } = req.params;
 
     if (!userId) {
-      res.status(401).send({ message: "Select user to delete" });
+      res.status(400).send({ message: "Select user to delete" });
       return;
     }
 

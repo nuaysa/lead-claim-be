@@ -82,7 +82,7 @@ export class AuthController {
   }
   async deleteUserController(req: Request, res: Response, next: NextFunction) {
     try {
-      await deleteUserService(req, res);
+      await deleteUserService(req, res, next);
     } catch (error) {
       next(error);
     }
