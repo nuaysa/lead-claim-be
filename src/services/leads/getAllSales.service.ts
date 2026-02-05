@@ -1,19 +1,16 @@
 import { AppError } from "../../utils/response";
 import prisma from "../../prisma";
 
-export const getSalesStatsByDateService = async (
-  startDate?: Date,
-  endDate?: Date
-) => {
+export const getSalesStatsByDateService = async (startDate?: Date, endDate?: Date) => {
   try {
     if (!startDate || !endDate) {
-      const today = new Date();
+      const now = new Date();
 
-      startDate = new Date(today.setHours(0, 0, 0, 0));
-      endDate = new Date(today.setHours(23, 59, 59, 999));
+      startDate = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+
+      endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
     }
 
-    // 1️⃣ total leads (semua, claimed + unclaimed)
     const totalLeads = await prisma.lead.count({
       where: {
         requestDate: {
@@ -23,7 +20,6 @@ export const getSalesStatsByDateService = async (
       },
     });
 
-    // 2️⃣ claimed per sales
     const grouped = await prisma.lead.groupBy({
       by: ["claimedById"],
       where: {
@@ -40,7 +36,6 @@ export const getSalesStatsByDateService = async (
       },
     });
 
-    // 3️⃣ semua sales
     const sales = await prisma.user.findMany({
       select: {
         id: true,
@@ -48,17 +43,11 @@ export const getSalesStatsByDateService = async (
       },
     });
 
-    // 4️⃣ mapping + percentage
     return sales.map((sales) => {
-      const found = grouped.find(
-        (g) => g.claimedById === sales.id
-      );
+      const found = grouped.find((g) => g.claimedById === sales.id);
 
       const totalClaimed = found?._count._all ?? 0;
-      const percentage =
-        totalLeads === 0
-          ? 0
-          : Math.round((totalClaimed / totalLeads) * 100);
+      const percentage = totalLeads === 0 ? 0 : Math.round((totalClaimed / totalLeads) * 100);
 
       return {
         id: sales.id,
@@ -70,9 +59,6 @@ export const getSalesStatsByDateService = async (
     });
   } catch (error) {
     console.error("Sales stats groupBy error:", error);
-    throw new AppError(
-      "Failed to fetch sales statistics",
-      500
-    );
+    throw new AppError("Failed to fetch sales statistics", 500);
   }
 };

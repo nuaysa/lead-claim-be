@@ -15,28 +15,27 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  role      Role
-  leads     Lead[]
-  tokenVersion Int      @default(0)
+  id           Int    @id @default(autoincrement())
+  name         String
+  email        String @unique
+  password     String
+  role         Role
+  leads        Lead[]
+  tokenVersion Int    @default(0)
 }
 
 model Lead {
-  id           Int       @id @default(autoincrement())
-  name         String
-  phone        String
-  email        String?
-  source       String?
-  status       LeadStatus @default(UNCLAIMED)
+  id     Int        @id @default(autoincrement())
+  name   String
+  phone  String
+  source String?
+  status LeadStatus @default(UNCLAIMED)
 
-  claimedById  Int?
-  claimedBy    User?     @relation(fields: [claimedById], references: [id])
+  claimedById Int?
+  claimedBy   User? @relation(fields: [claimedById], references: [id])
 
-  claimedAt    DateTime?
-  requestDate  DateTime  @default(now())
+  claimedAt   DateTime?
+  requestDate DateTime  @default(now())
 }
 
 enum Role {
