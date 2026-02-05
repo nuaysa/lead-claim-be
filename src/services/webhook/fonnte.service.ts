@@ -25,16 +25,16 @@ export const handleFonnteWebhookService = async (payload: FonntePayload) => {
       };
     }
 
-    const existingLead = await prisma.lead.findFirst({
-      where: { phone },
-    });
+    // const existingLead = await prisma.lead.findFirst({
+    //   where: { phone },
+    // });
 
-    if (existingLead) {
-      return {
-        isNew: false,
-        leadId: existingLead.id,
-      };
-    }
+    // if (existingLead) {
+    //   return {
+    //     isNew: false,
+    //     leadId: existingLead.id,
+    //   };
+    // }
 
     const requestDate = new Date(Number(payload.timestamp) * 1000);
 
