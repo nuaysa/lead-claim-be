@@ -22,22 +22,10 @@ export class AuthController {
     }
   }
   
-   async getProfileController(req: Request, res: Response) {
+   async getProfileController(req: Request, res: Response, next: NextFunction) {
     try {
-      const authHeader = req.headers.authorization;
-      
-      if (!authHeader) {
-        return res.status(401).json({
-          success: false,
-          message: "No token provided",
-        });
-      }
 
-    const token = authHeader.startsWith('Bearer ') 
-      ? authHeader.slice(7) 
-      : authHeader;
-
-     const user = await getProfileByTokenService(token);
+     const user = await getProfileByTokenService(req, res, next);
 
       if (!user) {
         return res.status(404).json({

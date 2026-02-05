@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import prisma from "../../prisma";
 import jwt from "jsonwebtoken";
 import { AppError, successResponse } from "@/utils/response";
+
 const logoutService = async (req: Request, res: Response) => {
   const authHeader = req.headers.authorization;
 

@@ -1,14 +1,24 @@
+
+import { NextFunction, Request, Response } from "express";
 import prisma from "../../prisma";
 import jwt from "jsonwebtoken";
 
-export const getProfileByTokenService = async (authorizationHeader: string | undefined) => {
+export const getProfileByTokenService = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (!authorizationHeader) {
-      throw new Error("No authorization header");
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+      return res.status(401).json({
+        success: false,
+        message: "No token provided",
+      });
     }
 
-    const token = authorizationHeader.startsWith("Bearer ") ? authorizationHeader.slice(7) : authorizationHeader;
+    const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : authHeader;
 
+    if (!authHeader) {
+      throw new Error("No authorization header");
+    }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET || "leadClaimProject220126") as {
       id: number;
@@ -20,7 +30,7 @@ export const getProfileByTokenService = async (authorizationHeader: string | und
     };
 
     const user = await prisma.user.findUnique({
-      where: { id: decoded.id }, 
+      where: { id: decoded.id },
       select: {
         id: true,
         name: true,

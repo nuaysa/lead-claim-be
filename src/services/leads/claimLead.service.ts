@@ -1,4 +1,3 @@
-import { AppError } from "../../utils/response";
 import prisma from "../../prisma";
 import { Request, Response } from "express";
 
