@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { registerService } from "../services/auth/register.service";
 import { loginService } from "../services/auth/login.service";
 import { getProfileByTokenService } from "../services/auth/getProfile.service";
+import { resetPasswordUserService } from "@/services/auth/resetPassword.service";
 
 export class AuthController {
   async registerController(req: Request, res: Response, next: NextFunction) {
@@ -71,4 +72,11 @@ export class AuthController {
     }
   }
 
+  async resetPassword(req: Request, res: Response, next: NextFunction) {
+    try {
+      await resetPasswordUserService(req, res);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

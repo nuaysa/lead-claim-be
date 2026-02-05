@@ -14,8 +14,9 @@ export class AuthRouter {
 
   private initializeRoutes() {
     this.router.post("/register", this.authController.registerController);
+    this.router.post("/reset-password", verifyToken, this.authController.resetPassword);
     this.router.post("/login", this.authController.loginController);
-  this.router.get("/profile", verifyToken, this.authController.getProfileController);
+    this.router.get("/profile", verifyToken, this.authController.getProfileController);
   }
 
   getRouter() {
