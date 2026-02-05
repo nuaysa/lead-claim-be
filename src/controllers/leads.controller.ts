@@ -33,11 +33,8 @@ export class LeadsController {
   }
 
   async claimLead(req: Request, res: Response) {
-    const leadId = Number(req.params.id);
-    const salesId = req.user?.id || 0;
-
     try {
-      const data = await claimLeadService(leadId, salesId);
+      const data = await claimLeadService(req, res);
       res.json(data);
     } catch (err: any) {
       res.status(err.status || 500).json({ message: err.message });
