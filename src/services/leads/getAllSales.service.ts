@@ -40,6 +40,7 @@ export const getSalesStatsByDateService = async (startDate?: Date, endDate?: Dat
       select: {
         id: true,
         name: true,
+        email: true,
       },
     });
 
@@ -55,6 +56,7 @@ export const getSalesStatsByDateService = async (startDate?: Date, endDate?: Dat
         totalLeads,
         totalClaimed,
         percentage,
+        email: sales.email,
       };
     });
   } catch (error) {
