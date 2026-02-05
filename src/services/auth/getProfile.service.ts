@@ -9,7 +9,6 @@ export const getProfileByTokenService = async (authorizationHeader: string | und
 
     const token = authorizationHeader.startsWith("Bearer ") ? authorizationHeader.slice(7) : authorizationHeader;
 
-    console.log("Token received:", token.substring(0, 20) + "...");
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET || "leadClaimProject220126") as {
       id: number;
@@ -19,8 +18,6 @@ export const getProfileByTokenService = async (authorizationHeader: string | und
       iat?: number;
       exp?: number;
     };
-
-    console.log("Decoded token:", decoded);
 
     const user = await prisma.user.findUnique({
       where: { id: decoded.id }, 
@@ -35,8 +32,6 @@ export const getProfileByTokenService = async (authorizationHeader: string | und
     if (!user) {
       throw new Error("User not found");
     }
-
-    console.log("User found:", user.id, user.name);
 
     return user;
   } catch (err: any) {
