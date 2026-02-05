@@ -3,13 +3,15 @@ import { Request, Response } from "express";
 
 export const deleteUserService = async (req: Request, res: Response) => {
   try {
-    if (!req.user?.id) {
-      res.status(401).send({ message: "Unauthorized request!" });
+     const { userId } = req.params;
+
+    if (!userId) {
+      res.status(401).send({ message: "Select user to delete" });
       return;
     }
 
-    const user = await prisma.user.delete({
-      where: { id: req.user.id },
+    const user = await prisma.user.findFirst({
+      where: { id: +userId },
     });
 
     if (!user) {
@@ -17,6 +19,9 @@ export const deleteUserService = async (req: Request, res: Response) => {
       return;
     }
 
+    await prisma.user.delete({
+      where: { id: user.id },
+    });
 
     res.status(200).send({ message: "User has been deleted successfully!" });
   } catch (err) {

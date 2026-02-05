@@ -73,14 +73,14 @@ export class AuthController {
     }
   }
 
-  async resetPassword(req: Request, res: Response, next: NextFunction) {
+  async resetPasswordController(req: Request, res: Response, next: NextFunction) {
     try {
       await resetPasswordUserService(req, res);
     } catch (error) {
       next(error);
     }
   }
-  async deleteUser(req: Request, res: Response, next: NextFunction) {
+  async deleteUserController(req: Request, res: Response, next: NextFunction) {
     try {
       await deleteUserService(req, res);
     } catch (error) {
