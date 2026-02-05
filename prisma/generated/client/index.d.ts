@@ -1040,7 +1040,6 @@ export namespace Prisma {
     email: string | null
     password: string | null
     role: $Enums.Role | null
-    isVerified: boolean | null
     tokenVersion: number | null
   }
 
@@ -1050,7 +1049,6 @@ export namespace Prisma {
     email: string | null
     password: string | null
     role: $Enums.Role | null
-    isVerified: boolean | null
     tokenVersion: number | null
   }
 
@@ -1060,7 +1058,6 @@ export namespace Prisma {
     email: number
     password: number
     role: number
-    isVerified: number
     tokenVersion: number
     _all: number
   }
@@ -1082,7 +1079,6 @@ export namespace Prisma {
     email?: true
     password?: true
     role?: true
-    isVerified?: true
     tokenVersion?: true
   }
 
@@ -1092,7 +1088,6 @@ export namespace Prisma {
     email?: true
     password?: true
     role?: true
-    isVerified?: true
     tokenVersion?: true
   }
 
@@ -1102,7 +1097,6 @@ export namespace Prisma {
     email?: true
     password?: true
     role?: true
-    isVerified?: true
     tokenVersion?: true
     _all?: true
   }
@@ -1199,7 +1193,6 @@ export namespace Prisma {
     email: string
     password: string
     role: $Enums.Role
-    isVerified: boolean
     tokenVersion: number
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
@@ -1228,7 +1221,6 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     role?: boolean
-    isVerified?: boolean
     tokenVersion?: boolean
     leads?: boolean | User$leadsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1240,7 +1232,6 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     role?: boolean
-    isVerified?: boolean
     tokenVersion?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -1250,7 +1241,6 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     role?: boolean
-    isVerified?: boolean
     tokenVersion?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -1260,11 +1250,10 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     role?: boolean
-    isVerified?: boolean
     tokenVersion?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "isVerified" | "tokenVersion", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "tokenVersion", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leads?: boolean | User$leadsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1283,7 +1272,6 @@ export namespace Prisma {
       email: string
       password: string
       role: $Enums.Role
-      isVerified: boolean
       tokenVersion: number
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -1714,7 +1702,6 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
-    readonly isVerified: FieldRef<"User", 'Boolean'>
     readonly tokenVersion: FieldRef<"User", 'Int'>
   }
     
@@ -2172,9 +2159,9 @@ export namespace Prisma {
     id: number | null
     name: string | null
     phone: string | null
-    email: string | null
     source: string | null
     status: $Enums.LeadStatus | null
+    message: string | null
     claimedById: number | null
     claimedAt: Date | null
     requestDate: Date | null
@@ -2184,9 +2171,9 @@ export namespace Prisma {
     id: number | null
     name: string | null
     phone: string | null
-    email: string | null
     source: string | null
     status: $Enums.LeadStatus | null
+    message: string | null
     claimedById: number | null
     claimedAt: Date | null
     requestDate: Date | null
@@ -2196,9 +2183,9 @@ export namespace Prisma {
     id: number
     name: number
     phone: number
-    email: number
     source: number
     status: number
+    message: number
     claimedById: number
     claimedAt: number
     requestDate: number
@@ -2220,9 +2207,9 @@ export namespace Prisma {
     id?: true
     name?: true
     phone?: true
-    email?: true
     source?: true
     status?: true
+    message?: true
     claimedById?: true
     claimedAt?: true
     requestDate?: true
@@ -2232,9 +2219,9 @@ export namespace Prisma {
     id?: true
     name?: true
     phone?: true
-    email?: true
     source?: true
     status?: true
+    message?: true
     claimedById?: true
     claimedAt?: true
     requestDate?: true
@@ -2244,9 +2231,9 @@ export namespace Prisma {
     id?: true
     name?: true
     phone?: true
-    email?: true
     source?: true
     status?: true
+    message?: true
     claimedById?: true
     claimedAt?: true
     requestDate?: true
@@ -2343,9 +2330,9 @@ export namespace Prisma {
     id: number
     name: string
     phone: string
-    email: string | null
     source: string | null
     status: $Enums.LeadStatus
+    message: string | null
     claimedById: number | null
     claimedAt: Date | null
     requestDate: Date
@@ -2374,9 +2361,9 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     phone?: boolean
-    email?: boolean
     source?: boolean
     status?: boolean
+    message?: boolean
     claimedById?: boolean
     claimedAt?: boolean
     requestDate?: boolean
@@ -2387,9 +2374,9 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     phone?: boolean
-    email?: boolean
     source?: boolean
     status?: boolean
+    message?: boolean
     claimedById?: boolean
     claimedAt?: boolean
     requestDate?: boolean
@@ -2400,9 +2387,9 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     phone?: boolean
-    email?: boolean
     source?: boolean
     status?: boolean
+    message?: boolean
     claimedById?: boolean
     claimedAt?: boolean
     requestDate?: boolean
@@ -2413,15 +2400,15 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     phone?: boolean
-    email?: boolean
     source?: boolean
     status?: boolean
+    message?: boolean
     claimedById?: boolean
     claimedAt?: boolean
     requestDate?: boolean
   }
 
-  export type LeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phone" | "email" | "source" | "status" | "claimedById" | "claimedAt" | "requestDate", ExtArgs["result"]["lead"]>
+  export type LeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phone" | "source" | "status" | "message" | "claimedById" | "claimedAt" | "requestDate", ExtArgs["result"]["lead"]>
   export type LeadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     claimedBy?: boolean | Lead$claimedByArgs<ExtArgs>
   }
@@ -2441,9 +2428,9 @@ export namespace Prisma {
       id: number
       name: string
       phone: string
-      email: string | null
       source: string | null
       status: $Enums.LeadStatus
+      message: string | null
       claimedById: number | null
       claimedAt: Date | null
       requestDate: Date
@@ -2874,9 +2861,9 @@ export namespace Prisma {
     readonly id: FieldRef<"Lead", 'Int'>
     readonly name: FieldRef<"Lead", 'String'>
     readonly phone: FieldRef<"Lead", 'String'>
-    readonly email: FieldRef<"Lead", 'String'>
     readonly source: FieldRef<"Lead", 'String'>
     readonly status: FieldRef<"Lead", 'LeadStatus'>
+    readonly message: FieldRef<"Lead", 'String'>
     readonly claimedById: FieldRef<"Lead", 'Int'>
     readonly claimedAt: FieldRef<"Lead", 'DateTime'>
     readonly requestDate: FieldRef<"Lead", 'DateTime'>
@@ -3333,7 +3320,6 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     role: 'role',
-    isVerified: 'isVerified',
     tokenVersion: 'tokenVersion'
   };
 
@@ -3344,9 +3330,9 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     phone: 'phone',
-    email: 'email',
     source: 'source',
     status: 'status',
+    message: 'message',
     claimedById: 'claimedById',
     claimedAt: 'claimedAt',
     requestDate: 'requestDate'
@@ -3427,13 +3413,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'LeadStatus'
    */
   export type EnumLeadStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeadStatus'>
@@ -3487,7 +3466,6 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
-    isVerified?: BoolFilter<"User"> | boolean
     tokenVersion?: IntFilter<"User"> | number
     leads?: LeadListRelationFilter
   }
@@ -3498,7 +3476,6 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
-    isVerified?: SortOrder
     tokenVersion?: SortOrder
     leads?: LeadOrderByRelationAggregateInput
   }
@@ -3512,7 +3489,6 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
-    isVerified?: BoolFilter<"User"> | boolean
     tokenVersion?: IntFilter<"User"> | number
     leads?: LeadListRelationFilter
   }, "id" | "email">
@@ -3523,7 +3499,6 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
-    isVerified?: SortOrder
     tokenVersion?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
@@ -3541,7 +3516,6 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
-    isVerified?: BoolWithAggregatesFilter<"User"> | boolean
     tokenVersion?: IntWithAggregatesFilter<"User"> | number
   }
 
@@ -3552,9 +3526,9 @@ export namespace Prisma {
     id?: IntFilter<"Lead"> | number
     name?: StringFilter<"Lead"> | string
     phone?: StringFilter<"Lead"> | string
-    email?: StringNullableFilter<"Lead"> | string | null
     source?: StringNullableFilter<"Lead"> | string | null
     status?: EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
+    message?: StringNullableFilter<"Lead"> | string | null
     claimedById?: IntNullableFilter<"Lead"> | number | null
     claimedAt?: DateTimeNullableFilter<"Lead"> | Date | string | null
     requestDate?: DateTimeFilter<"Lead"> | Date | string
@@ -3565,9 +3539,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     phone?: SortOrder
-    email?: SortOrderInput | SortOrder
     source?: SortOrderInput | SortOrder
     status?: SortOrder
+    message?: SortOrderInput | SortOrder
     claimedById?: SortOrderInput | SortOrder
     claimedAt?: SortOrderInput | SortOrder
     requestDate?: SortOrder
@@ -3581,9 +3555,9 @@ export namespace Prisma {
     NOT?: LeadWhereInput | LeadWhereInput[]
     name?: StringFilter<"Lead"> | string
     phone?: StringFilter<"Lead"> | string
-    email?: StringNullableFilter<"Lead"> | string | null
     source?: StringNullableFilter<"Lead"> | string | null
     status?: EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
+    message?: StringNullableFilter<"Lead"> | string | null
     claimedById?: IntNullableFilter<"Lead"> | number | null
     claimedAt?: DateTimeNullableFilter<"Lead"> | Date | string | null
     requestDate?: DateTimeFilter<"Lead"> | Date | string
@@ -3594,9 +3568,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     phone?: SortOrder
-    email?: SortOrderInput | SortOrder
     source?: SortOrderInput | SortOrder
     status?: SortOrder
+    message?: SortOrderInput | SortOrder
     claimedById?: SortOrderInput | SortOrder
     claimedAt?: SortOrderInput | SortOrder
     requestDate?: SortOrder
@@ -3614,9 +3588,9 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Lead"> | number
     name?: StringWithAggregatesFilter<"Lead"> | string
     phone?: StringWithAggregatesFilter<"Lead"> | string
-    email?: StringNullableWithAggregatesFilter<"Lead"> | string | null
     source?: StringNullableWithAggregatesFilter<"Lead"> | string | null
     status?: EnumLeadStatusWithAggregatesFilter<"Lead"> | $Enums.LeadStatus
+    message?: StringNullableWithAggregatesFilter<"Lead"> | string | null
     claimedById?: IntNullableWithAggregatesFilter<"Lead"> | number | null
     claimedAt?: DateTimeNullableWithAggregatesFilter<"Lead"> | Date | string | null
     requestDate?: DateTimeWithAggregatesFilter<"Lead"> | Date | string
@@ -3627,7 +3601,6 @@ export namespace Prisma {
     email: string
     password: string
     role: $Enums.Role
-    isVerified?: boolean
     tokenVersion?: number
     leads?: LeadCreateNestedManyWithoutClaimedByInput
   }
@@ -3638,7 +3611,6 @@ export namespace Prisma {
     email: string
     password: string
     role: $Enums.Role
-    isVerified?: boolean
     tokenVersion?: number
     leads?: LeadUncheckedCreateNestedManyWithoutClaimedByInput
   }
@@ -3648,7 +3620,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
     tokenVersion?: IntFieldUpdateOperationsInput | number
     leads?: LeadUpdateManyWithoutClaimedByNestedInput
   }
@@ -3659,7 +3630,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
     tokenVersion?: IntFieldUpdateOperationsInput | number
     leads?: LeadUncheckedUpdateManyWithoutClaimedByNestedInput
   }
@@ -3670,7 +3640,6 @@ export namespace Prisma {
     email: string
     password: string
     role: $Enums.Role
-    isVerified?: boolean
     tokenVersion?: number
   }
 
@@ -3679,7 +3648,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
     tokenVersion?: IntFieldUpdateOperationsInput | number
   }
 
@@ -3689,16 +3657,15 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
     tokenVersion?: IntFieldUpdateOperationsInput | number
   }
 
   export type LeadCreateInput = {
     name: string
     phone: string
-    email?: string | null
     source?: string | null
     status?: $Enums.LeadStatus
+    message?: string | null
     claimedAt?: Date | string | null
     requestDate?: Date | string
     claimedBy?: UserCreateNestedOneWithoutLeadsInput
@@ -3708,9 +3675,9 @@ export namespace Prisma {
     id?: number
     name: string
     phone: string
-    email?: string | null
     source?: string | null
     status?: $Enums.LeadStatus
+    message?: string | null
     claimedById?: number | null
     claimedAt?: Date | string | null
     requestDate?: Date | string
@@ -3719,9 +3686,9 @@ export namespace Prisma {
   export type LeadUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
     claimedBy?: UserUpdateOneWithoutLeadsNestedInput
@@ -3731,9 +3698,9 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     claimedById?: NullableIntFieldUpdateOperationsInput | number | null
     claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3743,9 +3710,9 @@ export namespace Prisma {
     id?: number
     name: string
     phone: string
-    email?: string | null
     source?: string | null
     status?: $Enums.LeadStatus
+    message?: string | null
     claimedById?: number | null
     claimedAt?: Date | string | null
     requestDate?: Date | string
@@ -3754,9 +3721,9 @@ export namespace Prisma {
   export type LeadUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3765,9 +3732,9 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     claimedById?: NullableIntFieldUpdateOperationsInput | number | null
     claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -3806,11 +3773,6 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type LeadListRelationFilter = {
     every?: LeadWhereInput
     some?: LeadWhereInput
@@ -3827,7 +3789,6 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
-    isVerified?: SortOrder
     tokenVersion?: SortOrder
   }
 
@@ -3842,7 +3803,6 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
-    isVerified?: SortOrder
     tokenVersion?: SortOrder
   }
 
@@ -3852,7 +3812,6 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
-    isVerified?: SortOrder
     tokenVersion?: SortOrder
   }
 
@@ -3903,14 +3862,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleFilter<$PrismaModel>
     _max?: NestedEnumRoleFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
@@ -3982,9 +3933,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     phone?: SortOrder
-    email?: SortOrder
     source?: SortOrder
     status?: SortOrder
+    message?: SortOrder
     claimedById?: SortOrder
     claimedAt?: SortOrder
     requestDate?: SortOrder
@@ -3999,9 +3950,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     phone?: SortOrder
-    email?: SortOrder
     source?: SortOrder
     status?: SortOrder
+    message?: SortOrder
     claimedById?: SortOrder
     claimedAt?: SortOrder
     requestDate?: SortOrder
@@ -4011,9 +3962,9 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     phone?: SortOrder
-    email?: SortOrder
     source?: SortOrder
     status?: SortOrder
+    message?: SortOrder
     claimedById?: SortOrder
     claimedAt?: SortOrder
     requestDate?: SortOrder
@@ -4116,10 +4067,6 @@ export namespace Prisma {
 
   export type EnumRoleFieldUpdateOperationsInput = {
     set?: $Enums.Role
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -4230,11 +4177,6 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -4287,14 +4229,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleFilter<$PrismaModel>
     _max?: NestedEnumRoleFilter<$PrismaModel>
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -4436,9 +4370,9 @@ export namespace Prisma {
   export type LeadCreateWithoutClaimedByInput = {
     name: string
     phone: string
-    email?: string | null
     source?: string | null
     status?: $Enums.LeadStatus
+    message?: string | null
     claimedAt?: Date | string | null
     requestDate?: Date | string
   }
@@ -4447,9 +4381,9 @@ export namespace Prisma {
     id?: number
     name: string
     phone: string
-    email?: string | null
     source?: string | null
     status?: $Enums.LeadStatus
+    message?: string | null
     claimedAt?: Date | string | null
     requestDate?: Date | string
   }
@@ -4487,9 +4421,9 @@ export namespace Prisma {
     id?: IntFilter<"Lead"> | number
     name?: StringFilter<"Lead"> | string
     phone?: StringFilter<"Lead"> | string
-    email?: StringNullableFilter<"Lead"> | string | null
     source?: StringNullableFilter<"Lead"> | string | null
     status?: EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
+    message?: StringNullableFilter<"Lead"> | string | null
     claimedById?: IntNullableFilter<"Lead"> | number | null
     claimedAt?: DateTimeNullableFilter<"Lead"> | Date | string | null
     requestDate?: DateTimeFilter<"Lead"> | Date | string
@@ -4500,7 +4434,6 @@ export namespace Prisma {
     email: string
     password: string
     role: $Enums.Role
-    isVerified?: boolean
     tokenVersion?: number
   }
 
@@ -4510,7 +4443,6 @@ export namespace Prisma {
     email: string
     password: string
     role: $Enums.Role
-    isVerified?: boolean
     tokenVersion?: number
   }
 
@@ -4535,7 +4467,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
     tokenVersion?: IntFieldUpdateOperationsInput | number
   }
 
@@ -4545,7 +4476,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
     tokenVersion?: IntFieldUpdateOperationsInput | number
   }
 
@@ -4553,9 +4483,9 @@ export namespace Prisma {
     id?: number
     name: string
     phone: string
-    email?: string | null
     source?: string | null
     status?: $Enums.LeadStatus
+    message?: string | null
     claimedAt?: Date | string | null
     requestDate?: Date | string
   }
@@ -4563,9 +4493,9 @@ export namespace Prisma {
   export type LeadUpdateWithoutClaimedByInput = {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4574,9 +4504,9 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4585,9 +4515,9 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
     source?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }

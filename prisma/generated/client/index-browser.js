@@ -126,7 +126,6 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
-  isVerified: 'isVerified',
   tokenVersion: 'tokenVersion'
 };
 
@@ -134,9 +133,9 @@ exports.Prisma.LeadScalarFieldEnum = {
   id: 'id',
   name: 'name',
   phone: 'phone',
-  email: 'email',
   source: 'source',
   status: 'status',
+  message: 'message',
   claimedById: 'claimedById',
   claimedAt: 'claimedAt',
   requestDate: 'requestDate'

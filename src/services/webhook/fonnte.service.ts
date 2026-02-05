@@ -41,6 +41,7 @@ export const handleFonnteWebhookService = async (payload: FonntePayload) => {
     const lead = await prisma.lead.create({
       data: {
         name: payload.name || "Unknown",
+        message: payload.message || "-",
         phone,
         source: "fonnte",
         status: "UNCLAIMED",

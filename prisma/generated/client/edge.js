@@ -98,7 +98,6 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
-  isVerified: 'isVerified',
   tokenVersion: 'tokenVersion'
 };
 
@@ -106,9 +105,9 @@ exports.Prisma.LeadScalarFieldEnum = {
   id: 'id',
   name: 'name',
   phone: 'phone',
-  email: 'email',
   source: 'source',
   status: 'status',
+  message: 'message',
   claimedById: 'claimedById',
   claimedAt: 'claimedAt',
   requestDate: 'requestDate'
@@ -150,10 +149,10 @@ const config = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider   = \"prisma-client-js\"\n  output     = \"../prisma/generated/client\"\n  engineType = \"client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id           Int     @id @default(autoincrement())\n  name         String\n  email        String  @unique\n  password     String\n  role         Role\n  leads        Lead[]\n  isVerified   Boolean @default(false)\n  tokenVersion Int     @default(0)\n}\n\nmodel Lead {\n  id     Int        @id @default(autoincrement())\n  name   String\n  phone  String\n  email  String?\n  source String?\n  status LeadStatus @default(UNCLAIMED)\n\n  claimedById Int?\n  claimedBy   User? @relation(fields: [claimedById], references: [id])\n\n  claimedAt   DateTime?\n  requestDate DateTime  @default(now())\n}\n\nenum Role {\n  SALES\n  ADMIN\n}\n\nenum LeadStatus {\n  UNCLAIMED\n  CLAIMED\n}\n"
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider   = \"prisma-client-js\"\n  output     = \"../prisma/generated/client\"\n  engineType = \"client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id           Int    @id @default(autoincrement())\n  name         String\n  email        String @unique\n  password     String\n  role         Role\n  leads        Lead[]\n  tokenVersion Int    @default(0)\n}\n\nmodel Lead {\n  id          Int        @id @default(autoincrement())\n  name        String\n  phone       String\n  source      String?\n  status      LeadStatus @default(UNCLAIMED)\n  message     String?\n  claimedById Int?\n  claimedBy   User?      @relation(fields: [claimedById], references: [id])\n\n  claimedAt   DateTime?\n  requestDate DateTime  @default(now())\n}\n\nenum Role {\n  SALES\n  ADMIN\n}\n\nenum LeadStatus {\n  UNCLAIMED\n  CLAIMED\n}\n"
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"leads\",\"kind\":\"object\",\"type\":\"Lead\",\"relationName\":\"LeadToUser\"},{\"name\":\"isVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"tokenVersion\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"Lead\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"phone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"source\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"LeadStatus\"},{\"name\":\"claimedById\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"claimedBy\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"LeadToUser\"},{\"name\":\"claimedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"requestDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"leads\",\"kind\":\"object\",\"type\":\"Lead\",\"relationName\":\"LeadToUser\"},{\"name\":\"tokenVersion\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"Lead\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"phone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"source\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"LeadStatus\"},{\"name\":\"message\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"claimedById\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"claimedBy\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"LeadToUser\"},{\"name\":\"claimedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"requestDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.compilerWasm = {
   getRuntime: async () => require('./query_compiler_fast_bg.js'),

@@ -25,14 +25,14 @@ model User {
 }
 
 model Lead {
-  id     Int        @id @default(autoincrement())
-  name   String
-  phone  String
-  source String?
-  status LeadStatus @default(UNCLAIMED)
-
+  id          Int        @id @default(autoincrement())
+  name        String
+  phone       String
+  source      String?
+  status      LeadStatus @default(UNCLAIMED)
+  message     String?
   claimedById Int?
-  claimedBy   User? @relation(fields: [claimedById], references: [id])
+  claimedBy   User?      @relation(fields: [claimedById], references: [id])
 
   claimedAt   DateTime?
   requestDate DateTime  @default(now())
