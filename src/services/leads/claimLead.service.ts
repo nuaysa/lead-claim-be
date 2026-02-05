@@ -1,10 +1,8 @@
 import { AppError } from "../../utils/response";
 import prisma from "../../prisma";
+import { Response } from "express";
 
-export const claimLeadService = async (
-  leadId: number,
-  salesId: number
-) => {
+export const claimLeadService = async (leadId: number, salesId: number, res: Response) => {
   return await prisma.$transaction(async (tx) => {
     const lead = await tx.lead.findFirst({
       where: {
@@ -14,10 +12,7 @@ export const claimLeadService = async (
     });
 
     if (!lead) {
-      throw new AppError(
-        "Lead already claimed by another sales",
-        409
-      );
+      throw new AppError("Lead already claimed by another sales", 409);
     }
 
     const updatedLead = await tx.lead.update({
@@ -29,6 +24,9 @@ export const claimLeadService = async (
       },
     });
 
-    return updatedLead;
+    return res.status(201).send({
+      message: "Lead claimed successfully",
+      lead: updatedLead,
+    });
   });
 };
