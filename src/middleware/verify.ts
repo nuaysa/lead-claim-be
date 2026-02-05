@@ -9,7 +9,6 @@ export const verifyToken = async (
   ): Promise<void> => {
     try {
       const token = req.header("Authorization")?.replace("Bearer ", "");
-      console.log("Received Token:", token); // Debug: Menampilkan token yang diterima
   
       if (!token) {
         res.status(401).send({ message: "Unauthorized! Token not found." });
@@ -17,10 +16,8 @@ export const verifyToken = async (
       }
   
       const verifiedUser = jwt.verify(token, process.env.JWT_KEY!) as UserPayload;
-      console.log("Decoded Token:", verifiedUser);
   
       req.user = { id: verifiedUser.id, role: verifiedUser.role };
-      console.log(req.user, "User in Request");
   
       next();
     } catch (err) {

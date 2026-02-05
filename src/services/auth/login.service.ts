@@ -33,11 +33,6 @@ export const loginService = async (req: Request, res: Response): Promise<void> =
       throw new Error("Password Salah!");
     }
 
-    // Jika akun belum diverifikasi
-    if (!user.isVerified) {
-      throw new Error("Akun Belum Terverifikasi! Pastikan Anda Sudah Melakukan Verifikasi Akun");
-    }
-
     const payload = {
       id: user.id,
       email: user.email,

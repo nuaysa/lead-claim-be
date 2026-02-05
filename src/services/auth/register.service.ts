@@ -3,10 +3,6 @@ import { findUser } from "../../libs/register.service";
 import prisma from "../../prisma";
 import { sign } from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import path from "path";
-import fs from "fs";
-import Handlebars from "handlebars";
-import { transportEmail } from "../../libs/nodemailer";
 
 export const registerService = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -38,26 +34,11 @@ export const registerService = async (req: Request, res: Response, next: NextFun
       },
     });
 
-    // Generate verification token
     const payload = { id: sales.id, role: "sales" };
     const token = sign(payload, process.env.JWT_KEY!, { expiresIn: "1d" });
-    const link = `${process.env.BASE_URL_FE}/verify/${token}`;
-
-    // Prepare and send the email
-    const templatePath = path.join(__dirname, "../../templates", "verify.hbs");
-    const templateSource = fs.readFileSync(templatePath, "utf-8");
-    const compiledTemplate = Handlebars.compile(templateSource);
-    const html = compiledTemplate({ name: req.body.name, link });
-
-    await transportEmail.sendMail({
-      from: "Admin",
-      to: req.body.email,
-      subject: "Registration Successful",
-      html,
-    });
 
     res.status(201).send({
-      message: "Akun Berhasil Dibuat! Mohon Periksa Email yang terdaftar untuk Verifikasi.",
+      message: "Akun Berhasil Dibuat!",
       sales,
       token: token,
     });

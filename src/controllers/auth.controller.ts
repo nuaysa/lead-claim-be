@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { registerService } from "../services/auth/register.service";
 import { loginService } from "../services/auth/login.service";
-import { verifyService } from "../services/auth/verify.service";
 import { getProfileByTokenService } from "../services/auth/getProfile.service";
 
 export class AuthController {
@@ -21,14 +20,6 @@ export class AuthController {
     }
   }
   
-  async verifyController(req: Request, res: Response, next: NextFunction) {
-    try {
-      return verifyService(req, res);
-    } catch (error) {
-      next(error);
-    }
-  }
-  
    async getProfileController(req: Request, res: Response) {
     try {
       const authHeader = req.headers.authorization;
@@ -39,7 +30,7 @@ export class AuthController {
           message: "No token provided",
         });
       }
-      
+
     const token = authHeader.startsWith('Bearer ') 
       ? authHeader.slice(7) 
       : authHeader;

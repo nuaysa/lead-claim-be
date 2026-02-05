@@ -16,7 +16,6 @@ export class AuthRouter {
     this.router.post("/register", this.authController.registerController);
     this.router.post("/login", this.authController.loginController);
   this.router.get("/profile", verifyToken, this.authController.getProfileController);
-    this.router.patch("/verify/:token", this.authController.verifyController);
   }
 
   getRouter() {

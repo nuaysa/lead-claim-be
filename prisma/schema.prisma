@@ -21,7 +21,6 @@ model User {
   password  String
   role      Role
   leads     Lead[]
-  isVerified Boolean @default(false)
   tokenVersion Int      @default(0)
 }
 

@@ -23,7 +23,7 @@ export const getProfileByTokenService = async (authorizationHeader: string | und
     console.log("Decoded token:", decoded);
 
     const user = await prisma.user.findUnique({
-      where: { id: decoded.id }, // <-- Ganti userId menjadi id
+      where: { id: decoded.id }, 
       select: {
         id: true,
         name: true,
