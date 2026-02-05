@@ -15,7 +15,7 @@ export class LeadRouter {
   private initializeRoutes() {
     this.router.get("/myleads", verifyToken, this.leadController.getMyLeads);
     this.router.get("/sales", verifyToken, this.leadController.getAllSalesClaims);
-    this.router.patch("/claim/:id", verifyToken, this.leadController.claimLead);
+    this.router.patch("/claim/:leadId", verifyToken, this.leadController.claimLead);
     this.router.get("/", verifyToken, this.leadController.getUnclaimedLeads);
   }
 
