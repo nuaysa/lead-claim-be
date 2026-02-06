@@ -28,7 +28,7 @@ export class LeadsController {
 
     res.json({
       success: true,
-      data,
+      ...data,
     });
   }
 
