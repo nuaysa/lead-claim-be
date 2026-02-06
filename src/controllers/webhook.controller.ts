@@ -1,7 +1,7 @@
 import { handleFonnteWebhookService } from "../services/webhook/fonnte.service";
-import { AppError } from "../utils/response";
 import { Request, Response } from "express";
 import "dotenv/config";
+import { AppError } from "../utils/response";
 
 export class WebhookController {
 handleFonnteWebhookController = async (req: Request, res: Response) => {
