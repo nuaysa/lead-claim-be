@@ -4,6 +4,9 @@ import { loginService } from "../services/auth/login.service";
 import { getProfileByTokenService } from "../services/auth/getProfile.service";
 import { resetPasswordUserService } from "../services/auth/resetPassword.service";
 import { deleteUserService } from "../services/auth/deleteUser.service";
+import { errorResponse } from "../utils/response";
+import { getUserByIdService } from "../services/auth/getUser.service";
+import { editUserService } from "../services/auth/editUser.service";
 
 export class AuthController {
   async registerController(req: Request, res: Response, next: NextFunction) {
@@ -21,11 +24,10 @@ export class AuthController {
       next(error);
     }
   }
-  
-   async getProfileController(req: Request, res: Response, next: NextFunction) {
-    try {
 
-     const user = await getProfileByTokenService(req, res, next);
+  async getProfileController(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = await getProfileByTokenService(req, res, next);
 
       if (!user) {
         return res.status(404).json({
@@ -39,7 +41,6 @@ export class AuthController {
         message: "Profile retrieved successfully",
         data: user,
       });
-      
     } catch (err: any) {
       if (err.name === "JsonWebTokenError") {
         return res.status(401).json({
@@ -53,7 +54,7 @@ export class AuthController {
           message: "Token expired",
         });
       }
-      
+
       res.status(500).json({
         success: false,
         message: err.message || "Server error",
@@ -73,6 +74,45 @@ export class AuthController {
       await deleteUserService(req, res, next);
     } catch (error) {
       next(error);
+    }
+  }
+  async editUserController(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { nama, role, password } = req.body;
+
+      const User = await editUserService({
+        id: +id,
+        nama: nama,
+        role: role,
+        password: password,
+      });
+
+      res.status(200).send(User);
+    } catch (err: any) {
+      return errorResponse(res, {
+        error: "Application Error",
+        message: err.message,
+        status: 400,
+      });
+    }
+  }
+
+  async getUserByIdController(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+
+      const User = await getUserByIdService({
+        UserId: +id,
+      });
+
+      res.status(200).send(User);
+    } catch (err: any) {
+      return errorResponse(res, {
+        error: "Application Error",
+        message: err.message,
+        status: 400,
+      });
     }
   }
 }
