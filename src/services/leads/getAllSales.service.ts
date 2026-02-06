@@ -1,7 +1,7 @@
 import { AppError } from "../../utils/response";
 import prisma from "../../prisma";
 
-export const getSalesStatsByDateService = async (startDate?: Date, endDate?: Date) => {
+export const getSalesStatsByDateService = async (startDate?: Date, endDate?: Date, page = 1, limit = 5) => {
   try {
     if (!startDate || !endDate) {
       const now = new Date();
@@ -10,6 +10,14 @@ export const getSalesStatsByDateService = async (startDate?: Date, endDate?: Dat
 
       endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
     }
+
+    const skip = (page - 1) * limit;
+
+    const total = await prisma.lead.count({
+      where: {
+        status: "UNCLAIMED",
+      },
+    });
 
     const totalLeads = await prisma.lead.count({
       where: {
@@ -42,6 +50,8 @@ export const getSalesStatsByDateService = async (startDate?: Date, endDate?: Dat
         name: true,
         email: true,
       },
+      skip,
+      take: limit,
     });
 
     return sales.map((sales) => {
@@ -50,6 +60,7 @@ export const getSalesStatsByDateService = async (startDate?: Date, endDate?: Dat
       const totalClaimed = found?._count._all ?? 0;
       const percentage = totalLeads === 0 ? 0 : Math.round((totalClaimed / totalLeads) * 100);
 
+      const totalPages = Math.ceil(total / limit);
       return {
         id: sales.id,
         name: sales.name,
@@ -57,6 +68,10 @@ export const getSalesStatsByDateService = async (startDate?: Date, endDate?: Dat
         totalClaimed,
         percentage,
         email: sales.email,
+        totalPages,
+        page,
+        limit,
+        total
       };
     });
   } catch (error) {

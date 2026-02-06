@@ -1,7 +1,7 @@
 import prisma from "../../prisma";
 import { AppError } from "../../utils/response";
 
-export const getMyLeadsService = async (salesId: number, page = 1, limit = 10) => {
+export const getMyLeadsService = async (salesId: number, page = 1, limit = 5) => {
   try {
     const skip = (page - 1) * limit;
 

@@ -3,7 +3,7 @@ import { AppError } from "../../utils/response";
 
 export const getUnclaimedLeadsService = async (
   page = 1,
-  limit = 10
+  limit = 5
 ) => {
   try {
     const skip = (page - 1) * limit;
