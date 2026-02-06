@@ -34,7 +34,6 @@ handleFonnteWebhookController = async (req: Request, res: Response) => {
       });
     }
 
-    console.error("Fonnte webhook controller error:", err);
     return res.status(500).json({
       success: false,
       message: "Webhook processing failed",
