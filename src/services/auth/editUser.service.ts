@@ -3,33 +3,38 @@ import bcrypt from "bcrypt";
 
 interface EditUserServiceProps {
   id: number;
-  nama?: string;
+  name?: string;
   role?: string;
+  email?: string;
   password?: string;
 }
 
-export const editUserService = async (data : EditUserServiceProps) => {
+export const editUserService = async (data: EditUserServiceProps) => {
   try {
-    const { id, nama,  password } = data;
+    const { id, name, role, email, password } = data;
 
     const updateData: any = {};
-    if (nama !== undefined) updateData.nama = nama;
+
+    if (name !== undefined) updateData.name = name;
+    if (role !== undefined) updateData.role = role;
+    if (email !== undefined) updateData.email = email;
+
     if (password && password.trim() !== "") {
       const hashed = await bcrypt.hash(password, 10);
       updateData.password = hashed;
     }
 
-    const User = await prisma.user.update({
+    const user = await prisma.user.update({
       where: { id },
       data: updateData,
     });
 
     return {
-      message: "User data",
-      data: User,
+      message: "User has been edited successfully!",
+      data: user,
     };
   } catch (err) {
     console.error("Error in editUserService:", err);
-    throw err instanceof Error ? err : new Error("Gagal Mengedit User");
+    throw new Error("Gagal Mengedit User");
   }
 };

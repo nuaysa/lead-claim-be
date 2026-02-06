@@ -18,7 +18,6 @@ export class AuthRouter {
     this.router.delete("/delete/:userId", verifyToken, verifyAdmin("ADMIN"), this.authController.deleteUserController);
     this.router.post("/login", this.authController.loginController);
     this.router.get("/profile", verifyToken, this.authController.getProfileController);
-    this.router.get("/:id", verifyToken, this.authController.getUserByIdController);
     this.router.patch("/edit/:id", verifyAdmin("admin"), verifyToken, this.authController.editUserController);
   }
 

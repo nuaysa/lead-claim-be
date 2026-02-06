@@ -5,7 +5,6 @@ import { sign } from "jsonwebtoken";
 
 export const loginService = async (req: Request, res: Response): Promise<void> => {
   try {
-
     if (!req.body || !req.body.data || !req.body.password) {
       res.status(400).json({ message: "Email dan Password wajib diisi" });
       return;
@@ -18,14 +17,13 @@ export const loginService = async (req: Request, res: Response): Promise<void> =
         OR: [{ email: data }, { name: data }],
       },
     });
-
     if (!user) {
-      throw new Error("Akun Tidak Ditemukan!");
+      throw new Error("User not found or invalid password!");
     }
 
     const isValidPass = await bcrypt.compare(password, user.password);
     if (!isValidPass) {
-      throw new Error("Password Salah!");
+      throw new Error("User not found or invalid password!");
     }
 
     const payload = {
@@ -39,7 +37,7 @@ export const loginService = async (req: Request, res: Response): Promise<void> =
     const token = sign(payload, process.env.JWT_KEY!, { expiresIn: "1d" });
 
     res.status(200).json({
-      message: "Login Berhasil",
+      message: "Login Success!",
       user: {
         id: user.id,
         name: user.name,

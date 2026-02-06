@@ -38,7 +38,7 @@ export const registerService = async (req: Request, res: Response, next: NextFun
     const token = sign(payload, process.env.JWT_KEY!, { expiresIn: "1d" });
 
     res.status(201).send({
-      message: "Akun Berhasil Dibuat!",
+      message: "Account registered successfully!",
       sales,
       token: token,
     });

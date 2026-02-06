@@ -1,10 +1,7 @@
 import prisma from "../../prisma";
 import { AppError } from "../../utils/response";
 
-export const getUnclaimedLeadsService = async (
-  page = 1,
-  limit = 5
-) => {
+export const getUnclaimedLeadsService = async (page = 1, limit = 5) => {
   try {
     const skip = (page - 1) * limit;
 
@@ -30,10 +27,12 @@ export const getUnclaimedLeadsService = async (
     return {
       message: "Unclaimed leads fetched successfully",
       data: leads,
-      page,
-      limit,
-      total,
-      totalPages,
+      pagination: {
+        total,
+        totalPages,
+        page,
+        limit,
+      },
     };
   } catch (error) {
     console.error("Get unclaimed leads error:", error);

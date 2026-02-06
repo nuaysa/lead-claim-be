@@ -5,7 +5,6 @@ import { getProfileByTokenService } from "../services/auth/getProfile.service";
 import { resetPasswordUserService } from "../services/auth/resetPassword.service";
 import { deleteUserService } from "../services/auth/deleteUser.service";
 import { errorResponse } from "../utils/response";
-import { getUserByIdService } from "../services/auth/getUser.service";
 import { editUserService } from "../services/auth/editUser.service";
 
 export class AuthController {
@@ -79,12 +78,13 @@ export class AuthController {
   async editUserController(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const { nama, role, password } = req.body;
+      const { name, role, password, email } = req.body;
 
       const User = await editUserService({
         id: +id,
-        nama: nama,
+        name,
         role: role,
+        email,
         password: password,
       });
 
@@ -98,21 +98,4 @@ export class AuthController {
     }
   }
 
-  async getUserByIdController(req: Request, res: Response) {
-    try {
-      const { id } = req.params;
-
-      const User = await getUserByIdService({
-        UserId: +id,
-      });
-
-      res.status(200).send(User);
-    } catch (err: any) {
-      return errorResponse(res, {
-        error: "Application Error",
-        message: err.message,
-        status: 400,
-      });
-    }
-  }
 }

@@ -34,7 +34,7 @@ const logoutService = async (req: Request, res: Response) => {
     },
   });
 
-  return successResponse(res, null, 200, "Logout berhasil");
+  return successResponse(res, null, 200, "Logout Success!");
 };
 
 export default logoutService;

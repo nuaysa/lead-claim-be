@@ -27,10 +27,12 @@ export const getMyLeadsService = async (salesId: number, page = 1, limit = 5) =>
     return {
       message: "My leads fetched successfully",
       data: leads,
-      page,
-      limit,
-      total,
-      totalPages,
+      pagination: {
+        total,
+        totalPages,
+        page,
+        limit,
+      },
     };
   } catch (error) {
     console.error("Get my leads error:", error);
