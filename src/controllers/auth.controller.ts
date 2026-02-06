@@ -4,8 +4,8 @@ import { loginService } from "../services/auth/login.service";
 import { getProfileByTokenService } from "../services/auth/getProfile.service";
 import { resetPasswordUserService } from "../services/auth/resetPassword.service";
 import { deleteUserService } from "../services/auth/deleteUser.service";
-import { errorResponse } from "../utils/response";
 import { editUserService } from "../services/auth/editUser.service";
+import { errorResponse } from "@/utils/response";
 
 export class AuthController {
   async registerController(req: Request, res: Response, next: NextFunction) {
