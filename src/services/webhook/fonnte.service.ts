@@ -19,24 +19,26 @@ export const handleFonnteWebhookService = async (payload: FonntePayload) => {
     const phone = payload.sender.split("@")[0].replace(/^0/, "62");
 
     if (!phone || phone.length < 9) {
-      return {
-        isNew: false,
-        reason: "Invalid sender",
-      };
+      return { isNew: false, reason: "Invalid sender" };
     }
 
-    // const existingLead = await prisma.lead.findFirst({
-    //   where: { phone },
-    // });
-
-    // if (existingLead) {
-    //   return {
-    //     isNew: false,
-    //     leadId: existingLead.id,
-    //   };
-    // }
-
     const requestDate = new Date(Number(payload.timestamp) * 1000);
+
+    const existingLead = await prisma.lead.findFirst({
+      where: {
+        phone: phone,
+        requestDate: requestDate, 
+        },
+    });
+
+    if (existingLead) {
+      console.log(`Duplicate webhook ignored: ${phone} at ${requestDate}`);
+      return {
+        isNew: false,
+        leadId: existingLead.id,
+        reason: "Already exists",
+      };
+    }
 
     const lead = await prisma.lead.create({
       data: {
@@ -49,44 +51,50 @@ export const handleFonnteWebhookService = async (payload: FonntePayload) => {
       },
     });
 
-    const templatePath = path.join(__dirname, "../../templates", "notification.hbs");
+    try {
+      const templatePath = path.join(__dirname, "../../templates", "notification.hbs");
+      
+      if (fs.existsSync(templatePath)) {
+        const templateSource = fs.readFileSync(templatePath, "utf-8");
+        const compiledTemplate = Handlebars.compile(templateSource);
+        
+        const users = await prisma.user.findMany({
+          select: { email: true },
+        });
 
-    const templateSource = fs.readFileSync(templatePath, "utf-8");
-    const compiledTemplate = Handlebars.compile(templateSource);
-    const users = await prisma.user.findMany({
-      select: { email: true },
-    });
+        const recipientEmails = users.map((u) => u.email).filter(Boolean);
 
-    const recipientEmails = users.map((u) => u.email).filter(Boolean);
+        if (recipientEmails.length > 0) {
+          const html = compiledTemplate({
+            name: lead.name,
+            phone,
+            message: payload.message,
+            time: requestDate.toLocaleString("id-ID"),
+            link: process.env.BASE_URL_FE,
+            year: new Date().getFullYear(),
+          });
 
-    const html = compiledTemplate({
-      name: lead.name,
-      phone,
-      message: payload.message,
-      time: requestDate.toLocaleString("id-ID"),
-      link: process.env.BASE_URL_FE,
-      year: new Date().getFullYear(),
-    });
-
-    await transportEmail.sendMail({
-      from: `"Powersurya CRM Notification" <${process.env.SMTP_USER}>`,
-      to: recipientEmails,
-      subject: "📩 New WhatsApp Lead (Fonnte)",
-      html,
-    });
-
-    transportEmail.verify((error) => {
-  if (error) {
-    console.error("SMTP error:", error);
-  } else {
-    console.log("SMTP ready to send emails");
-  }
-});
+          await transportEmail.sendMail({
+            from: `"Powersurya CRM" <${process.env.SMTP_USER}>`,
+            to: recipientEmails.join(", "),
+               subject: "📩 New WhatsApp Lead (Fonnte)",
+            html,
+          });
+          
+          console.log("Email notification sent successfully.");
+        }
+      } else {
+        console.warn("Email template not found, skipping email.");
+      }
+    } catch (emailError) {
+      console.error("Failed to send email notification:", emailError);
+    }
 
     return {
       isNew: true,
       leadId: lead.id,
     };
+
   } catch (error) {
     console.error("Fonnte webhook error:", error);
     throw new AppError("Failed to process Fonnte webhook", 500);
