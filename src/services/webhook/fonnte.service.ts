@@ -77,7 +77,7 @@ export const handleFonnteWebhookService = async (payload: FonntePayload) => {
           await transportEmail.sendMail({
             from: `"Powersurya CRM" <${process.env.SMTP_USER}>`,
             to: recipientEmails.join(", "),
-               subject: "📩 New WhatsApp Lead (Fonnte)",
+               subject: "📩 New WhatsApp Lead",
             html,
           });
           
