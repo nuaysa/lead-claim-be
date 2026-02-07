@@ -75,6 +75,14 @@ export const handleFonnteWebhookService = async (payload: FonntePayload) => {
       html,
     });
 
+    transportEmail.verify((error) => {
+  if (error) {
+    console.error("SMTP error:", error);
+  } else {
+    console.log("SMTP ready to send emails");
+  }
+});
+
     return {
       isNew: true,
       leadId: lead.id,
