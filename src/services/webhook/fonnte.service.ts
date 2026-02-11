@@ -51,44 +51,44 @@ export const handleFonnteWebhookService = async (payload: FonntePayload) => {
       },
     });
 
-    try {
-      const templatePath = path.join(__dirname, "../../templates", "notification.hbs");
+    // try {
+    //   const templatePath = path.join(__dirname, "../../templates", "notification.hbs");
       
-      if (fs.existsSync(templatePath)) {
-        const templateSource = fs.readFileSync(templatePath, "utf-8");
-        const compiledTemplate = Handlebars.compile(templateSource);
+    //   if (fs.existsSync(templatePath)) {
+    //     const templateSource = fs.readFileSync(templatePath, "utf-8");
+    //     const compiledTemplate = Handlebars.compile(templateSource);
         
-        const users = await prisma.user.findMany({
-          select: { email: true },
-        });
+    //     const users = await prisma.user.findMany({
+    //       select: { email: true },
+    //     });
 
-        const recipientEmails = users.map((u) => u.email).filter(Boolean);
+    //     const recipientEmails = users.map((u) => u.email).filter(Boolean);
 
-        if (recipientEmails.length > 0) {
-          const html = compiledTemplate({
-            name: lead.name,
-            phone,
-            message: payload.message,
-            time: requestDate.toLocaleString("id-ID"),
-            link: process.env.BASE_URL_FE,
-            year: new Date().getFullYear(),
-          });
+    //     if (recipientEmails.length > 0) {
+    //       const html = compiledTemplate({
+    //         name: lead.name,
+    //         phone,
+    //         message: payload.message,
+    //         time: requestDate.toLocaleString("id-ID"),
+    //         link: process.env.BASE_URL_FE,
+    //         year: new Date().getFullYear(),
+    //       });
 
-          await transportEmail.sendMail({
-            from: `"Powersurya CRM" <${process.env.SMTP_USER}>`,
-            to: recipientEmails.join(", "),
-               subject: "📩 New WhatsApp Lead",
-            html,
-          });
+    //       await transportEmail.sendMail({
+    //         from: `"Powersurya CRM" <${process.env.SMTP_USER}>`,
+    //         to: recipientEmails.join(", "),
+    //            subject: "📩 New WhatsApp Lead",
+    //         html,
+    //       });
           
-          console.log("Email notification sent successfully.");
-        }
-      } else {
-        console.warn("Email template not found, skipping email.");
-      }
-    } catch (emailError) {
-      console.error("Failed to send email notification:", emailError);
-    }
+    //       console.log("Email notification sent successfully.");
+    //     }
+    //   } else {
+    //     console.warn("Email template not found, skipping email.");
+    //   }
+    // } catch (emailError) {
+    //   console.error("Failed to send email notification:", emailError);
+    // }
 
     return {
       isNew: true,
