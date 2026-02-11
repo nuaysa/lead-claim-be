@@ -5,11 +5,15 @@ export const getUnclaimedLeadsService = async (page = 1, limit = 5) => {
   try {
     const skip = (page - 1) * limit;
 
-    const total = await prisma.lead.count({
-      where: {
-        status: "UNCLAIMED",
-      },
-    });
+    const [totalLeads, totalUnclaimed, totalClaimed] = await Promise.all([
+      prisma.lead.count(),
+      prisma.lead.count({
+        where: { status: "UNCLAIMED" },
+      }),
+      prisma.lead.count({
+        where: { status: "CLAIMED" },
+      }),
+    ]);
 
     const leads = await prisma.lead.findMany({
       where: {
@@ -22,13 +26,18 @@ export const getUnclaimedLeadsService = async (page = 1, limit = 5) => {
       take: limit,
     });
 
-    const totalPages = Math.ceil(total / limit);
+    const totalPages = Math.ceil(totalUnclaimed / limit);
 
     return {
       message: "Unclaimed leads fetched successfully",
       data: leads,
+      stats: {
+        totalLeads,
+        totalClaimed,
+        totalUnclaimed,
+      },
       pagination: {
-        total,
+        total: totalUnclaimed,
         totalPages,
         page,
         limit,
