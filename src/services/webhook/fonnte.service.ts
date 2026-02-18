@@ -22,17 +22,17 @@ export const handleFonnteWebhookService = async (payload: FonntePayload) => {
       return { isNew: false, reason: "Invalid sender" };
     }
 
-    const requestDate = new Date(Number(payload.timestamp) * 1000);
+    // const requestDate = new Date(Number(payload.timestamp) * 1000);
 
     const existingLead = await prisma.lead.findFirst({
       where: {
         phone: phone,
-        requestDate: requestDate, 
+        // requestDate: requestDate, 
         },
     });
 
     if (existingLead) {
-      console.log(`Duplicate webhook ignored: ${phone} at ${requestDate}`);
+      // console.log(`Duplicate webhook ignored: ${phone} at ${requestDate}`);
       return {
         isNew: false,
         leadId: existingLead.id,
@@ -47,7 +47,7 @@ export const handleFonnteWebhookService = async (payload: FonntePayload) => {
         phone,
         source: "fonnte",
         status: "UNCLAIMED",
-        requestDate,
+        // requestDate,
       },
     });
 
