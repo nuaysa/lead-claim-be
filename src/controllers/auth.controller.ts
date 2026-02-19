@@ -6,6 +6,7 @@ import { resetPasswordUserService } from "../services/auth/resetPassword.service
 import { deleteUserService } from "../services/auth/deleteUser.service";
 import { editUserService } from "../services/auth/editUser.service";
 import { errorResponse } from "../utils/response";
+import { refreshTokenService } from "@/services/auth/refreshToken.service";
 
 export class AuthController {
   async registerController(req: Request, res: Response, next: NextFunction) {
@@ -19,6 +20,14 @@ export class AuthController {
   async loginController(req: Request, res: Response, next: NextFunction) {
     try {
       return loginService(req, res);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async refreshTokenController(req: Request, res: Response, next: NextFunction) {
+    try {
+      return refreshTokenService(req, res);
     } catch (error) {
       next(error);
     }

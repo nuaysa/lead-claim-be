@@ -17,6 +17,7 @@ export class AuthRouter {
     this.router.patch("/reset-password", verifyToken, this.authController.resetPasswordController);
     this.router.delete("/delete/:userId", verifyToken, verifyAdmin("ADMIN"), this.authController.deleteUserController);
     this.router.post("/login", this.authController.loginController);
+    this.router.post("/refresh", this.authController.refreshTokenController);
     this.router.get("/profile", verifyToken, this.authController.getProfileController);
     this.router.patch("/edit/:id", verifyAdmin("admin"), verifyToken, this.authController.editUserController);
   }

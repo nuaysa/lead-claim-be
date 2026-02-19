@@ -33,9 +33,9 @@ export const loginService = async (req: Request, res: Response): Promise<void> =
       role: user.role,
       tokenVersion: user.tokenVersion,
     };
-
-    const token = sign(payload, process.env.JWT_KEY!, { expiresIn: "1d" });
-
+const accessToken = sign(payload, process.env.JWT_KEY!, { expiresIn: "2h" });
+    
+    const refreshToken = sign(payload, process.env.JWT_REFRESH_KEY!, { expiresIn: "1d" });
     res.status(200).json({
       message: "Login Success!",
       user: {
@@ -44,7 +44,8 @@ export const loginService = async (req: Request, res: Response): Promise<void> =
         email: user.email,
         role: user.role,
       },
-      token,
+      accessToken,
+      refreshToken
     });
   } catch (err: any) {
     console.error(err);

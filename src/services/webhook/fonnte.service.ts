@@ -32,7 +32,6 @@ export const handleFonnteWebhookService = async (payload: FonntePayload) => {
     });
 
     if (existingLead) {
-      // console.log(`Duplicate webhook ignored: ${phone} at ${requestDate}`);
       return {
         isNew: false,
         leadId: existingLead.id,
