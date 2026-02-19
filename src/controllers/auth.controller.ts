@@ -6,7 +6,7 @@ import { resetPasswordUserService } from "../services/auth/resetPassword.service
 import { deleteUserService } from "../services/auth/deleteUser.service";
 import { editUserService } from "../services/auth/editUser.service";
 import { errorResponse } from "../utils/response";
-import { refreshTokenService } from "@/services/auth/refreshToken.service";
+import { refreshTokenService } from "../services/auth/refreshToken.service";
 
 export class AuthController {
   async registerController(req: Request, res: Response, next: NextFunction) {
